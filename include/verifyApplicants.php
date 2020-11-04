@@ -65,7 +65,7 @@ class verifyApplicants {
 	}
 	
 	private function checkTables() {
-		$row = self::$query->get_results( "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = {$this->prefix}incluyeme_users_dicapselect AND column_name = 'resume_id'" );
+		$row = self::$query->get_results( "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{$this->prefix}incluyeme_users_dicapselect' AND column_name = 'resume_id'" );
 		
 		if ( empty( $row ) ) {
 			return false;

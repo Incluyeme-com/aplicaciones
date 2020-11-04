@@ -13,11 +13,10 @@ License: A "Slug" license name e.g. GPL2
 */
 require 'plugin-update-checker/plugin-update-checker.php';
 require 'include/verifyApplicants.php';
-
-use verifyApplicants\verifyApplicants;
+require 'include/activeIncluyemeApplicants.php';
 
 defined( 'ABSPATH' ) or exit;
-add_action( 'admin_init', 'incluyemeApplicants_requeriments' );
+add_action( 'admin_init', 'incluyemeApplicants_requirements' );
 
 function incluyemeApplicants_i18n() {
 	load_plugin_textdomain( 'incluyeme-applicants', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
@@ -35,25 +34,34 @@ function incluyemeApplicants_requirements() {
 		}
 	}
 	if ( is_admin() && current_user_can( 'activate_plugins' ) && is_plugin_active( 'wpjobboard/index.php' ) ) {
-		incluyeme_load();
+		activeIncluyemeApplicants();
+	}
+}
+
+function incluyemeApplicants_loaderCheck() {
+	$version = '1.0.0';
+	$check   = strcmp( get_option( 'incluyemeApplicantsVersion' ), $version );
+	if ( $check === 0 ) {
+		$template = plugin_dir_path( __FILE__ ) . '/include/templates/job-board/single.php';
+		$route    = get_template_directory();
+		if ( ! file_exists( $route . '/wpjobboard/job-board/single.php' ) ) {
+			mkdir( $route . '/wpjobboard' );
+			mkdir( $route . '/wpjobboard/job-board' );
+			copy( $template, $route . '/wpjobboard/job-board/single.php' );
+		} else {
+			copy( $template, $route . '/wpjobboard/job-board/single.php' );
+		}
+		update_option( 'incluyemeApplicantsVersion', $version );
 	}
 }
 
 function incluyemeApplicants_notice() {
 	?>
-	<div class="error"><p> <?php echo __( 'Sorry, but Incluyeme plugin requires the WPJob Board plugin to be installed and
+	<div class="error"><p> <?php echo __( 'Sorry, but Incluyeme Applicants plugin requires the WPJob Board plugin to be installed and
 	                      active.', 'incluyeme' ); ?> </p></div>
 	<?php
 }
 
-add_filter( "wpjb_form_save_apply", function ( $form ) {
-	$verifyApplicants = new verifyApplicants();
-	error_log( print_r( $verifyApplicants->checkUsersCapacities(), true ) );
-	
-	$form_data = $form->toArray();
-	
-	return $form;
-} );
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
 	'https://github.com/Incluyeme-com/filtro-aplicantes',
 	__FILE__,
