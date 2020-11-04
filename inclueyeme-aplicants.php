@@ -63,7 +63,7 @@ function incluyemeApplicants_notice() {
 }
 
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-	'https://github.com/Incluyeme-com/filtro-aplicantes',
+	'https://github.com/Incluyeme-com/aplicaciones',
 	__FILE__,
 	'incluyeme-applicants'
 );
