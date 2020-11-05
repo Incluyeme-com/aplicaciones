@@ -1,10 +1,10 @@
 <?php
 
 /*
-Plugin Name: Inclueyeme Applicants
+Plugin Name: Incluyeme Applicants
 Plugin URI: https://github.com/Cro22
-Description: A brief description of the Plugin.
-Version: 1.0
+Description: Activar este plugin impide que los aplicantes puedan solicitar puestos de trabajo sin completar la sección de disCapacidades.
+Version: 1.0.1
 Author: Jesus
 Author URI: https://github.com/Cro22
 Text Domain: incluyeme-applicants
@@ -28,7 +28,7 @@ function incluyemeApplicants_requirements() {
 	if ( is_admin() && current_user_can( 'activate_plugins' ) && ! is_plugin_active( 'wpjobboard/index.php' ) ) {
 		add_action( 'admin_notices', 'incluyeme_notice' );
 		deactivate_plugins( plugin_basename( __FILE__ ) );
-		
+
 		if ( isset( $_GET['activate'] ) ) {
 			unset( $_GET['activate'] );
 		}
