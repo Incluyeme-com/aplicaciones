@@ -61,7 +61,7 @@ $checkCapacities = new verifyApplicants();
 		?>
 		<div class="wpjb-flash-error wpjb-flash-small">
 			<span class="wpjb-glyphs wpjb-icon-attention">Los sentimos, para aplicar a ofertas laborales debes completar tu perfil <?php $urlForApp = get_option( 'incluyemeApplicantsURL' );
-				if ( $urlForApp ) { ?><a href="<?php echo $urlForApp; ?>">aquí</a><?php } ?></span>
+				if ( $urlForApp ) { ?><a href="<?php echo $dashboard['manage']['links']['myresume']['url']; ?>">aquí</a><?php } ?></span>
 		</div>
 	<?php elseif ( $can_apply ): ?>
 
