@@ -23,22 +23,22 @@ $checkCapacities = new verifyApplicants();
 ?>
 
 <div class="wpjb wpjb-job wpjb-page-single">
-
+	
 	<?php wpjb_flash() ?>
 	<?php include $this->getTemplate( "job-board", "job" ) ?>
-
+	
 	<?php if ( $members_only ): ?>
 		<div class="wpjb-job-apply" style="margin:24px 0px;">
 			<div class="wpjb-flash-error wpjb-flash-small">
 				<span class="wpjb-glyphs wpjb-icon-attention"><?php esc_html_e( $form_error ) ?></span>
 			</div>
-
+			
 			<div>
 				<a class="wpjb-button"
 				   href="<?php esc_attr_e( add_query_arg( "goto-job", $job->id, wpjr_link_to( "login" ) ) ) ?>"><?php _e( "Login", "wpjobboard" ) ?></a>
 				<a class="wpjb-button"
 				   href="<?php esc_attr_e( add_query_arg( "goto-job", $job->id, wpjr_link_to( "register" ) ) ) ?>"><?php _e( "Register", "wpjobboard" ) ?></a>
-
+				
 				<?php do_action( "wpjb_tpl_single_actions", $job, $can_apply ) ?>
 			</div>
 		</div>
@@ -47,24 +47,24 @@ $checkCapacities = new verifyApplicants();
 			<div class="wpjb-flash-error wpjb-flash-small">
 				<span class="wpjb-glyphs wpjb-icon-attention"><?php esc_html_e( $form_error ) ?></span>
 			</div>
-
+			
 			<div>
 				<a class="wpjb-button"
 				   href="<?php echo esc_html( wpjr_link_to( "mymembership" ) ); ?>"><?php _e( "Buy Membership", "wpjobboard" ) ?></a>
-
+				
 				<?php do_action( "wpjb_tpl_single_actions", $job, $can_apply ) ?>
 			</div>
 		</div>
 	<?php
 	elseif ( $checkCapacities->checkUsersCapacities() === false ):
-
+		
 		?>
 		<div class="wpjb-flash-error wpjb-flash-small">
-			<span class="wpjb-glyphs wpjb-icon-attention">Los sentimos, para aplicar a ofertas laborales debes completar tu perfil <?php $urlForApp = get_option( 'incluyemeApplicantsURL' );
-				if ( $urlForApp ) { ?><a href="<?php echo $dashboard['manage']['links']['myresume']['url']; ?>">aquí</a><?php } ?></span>
+			<span class="wpjb-glyphs wpjb-icon-attention">Los sentimos, para aplicar a ofertas laborales debes completar tu perfil <a
+						href="<?php echo wpjr_link_to( "myresume" ); ?>">aquí</a</span>
 		</div>
 	<?php elseif ( $can_apply ): ?>
-
+		
 		<div class="wpjb-job-apply" id="wpjb-scroll" style="margin:12px 0px;">
 			<div class="wpjb-job-buttons">
 				<?php if ( ! wpjb_conf( "front_hide_apply_link" ) ): ?>
@@ -79,57 +79,57 @@ $checkCapacities = new verifyApplicants();
 									class="wpjb-glyphs wpjb-icon-down-open">&nbsp;</span></a>
 					<?php endif; ?>
 				<?php endif; ?>
-
-
+				
+				
 				<?php do_action( "wpjb_tpl_single_actions", $job, $can_apply ) ?>
 			</div>
-
+			
 			<?php if ( ! wpjb_conf( "front_hide_apply_link" ) ): ?>
 				<div id="wpjb-form-job-apply"
 				     class="wpjb-form-slider wpjb-layer-inside <?php if ( ! $show->apply ): ?>wpjb-none<?php endif; ?>">
-
+					
 					<?php if ( $form_error ): ?>
 						<div class="wpjb-flash-error wpjb-flash-small">
 							<span class="wpjb-glyphs wpjb-icon-attention"><?php esc_html_e( $form_error ) ?></span>
 						</div>
 					<?php endif; ?>
-
+					
 					<form id="wpjb-apply-form"
 					      action="<?php esc_attr_e( wpjb_link_to( "job", $job, [ "form" => "apply" ] ) ) ?>#wpjb-scroll"
 					      method="post" enctype="multipart/form-data" class="wpjb-form wpjb-form-nolines">
 						<?php echo $form->renderHidden() ?>
 						<?php foreach ( $form->getReordered() as $group ): ?>
 							<?php /* @var $group stdClass */ ?>
-
+							
 							<?php if ( $group->title ): ?>
 								<div class="wpjb-legend"><?php esc_html_e( $group->title ) ?></div>
 							<?php endif; ?>
-
+							
 							<fieldset class="wpjb-fieldset-<?php esc_attr_e( $group->getName() ) ?>">
-
+								
 								<?php foreach ( $group->getReordered() as $name => $field ): ?>
 									<?php /* @var $field Daq_Form_Element */ ?>
 									<div class="<?php wpjb_form_input_features( $field ) ?>">
-
+										
 										<label class="wpjb-label">
 											<?php esc_html_e( $field->getLabel() ) ?>
 											<?php if ( $field->isRequired() ): ?><span
 													class="wpjb-required">*</span><?php endif; ?>
 										</label>
-
+										
 										<div class="wpjb-field">
 											<?php wpjb_form_render_input( $form, $field ) ?>
 											<?php wpjb_form_input_hint( $field ) ?>
 											<?php wpjb_form_input_errors( $field ) ?>
 										</div>
-
+									
 									</div>
 								<?php endforeach; ?>
 							</fieldset>
 						<?php endforeach; ?>
-
+						
 						<div class="wpjb-legend"></div>
-
+						
 						<fieldset>
 							<input type="submit" class="wpjb-submit" id="wpjb_submit"
 							       value="<?php _e( "Send Application", "wpjobboard" ) ?>"/>
@@ -145,12 +145,12 @@ $checkCapacities = new verifyApplicants();
 			</div>
 		</div>
 	<?php endif; ?>
-
+	
 	<?php $relatedJobs = wpjb_find_jobs( $related ); ?>
 	<?php if ( $show_related && $relatedJobs->total > 0 ): ?>
 		<div class="wpjb-text">
 			<h3><?php _e( "Related Jobs", "wpjobboard" ) ?></h3>
-
+			
 			<div class="wpjb-grid wpjb-grid-closed-top wpjb-grid-compact">
 				<?php foreach ( $relatedJobs->job as $relatedJob ): ?>
 					<?php /* @var $relatedJob Wpjb_Model_Job */ ?>
