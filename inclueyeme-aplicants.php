@@ -4,7 +4,7 @@
 Plugin Name: Incluyeme Applicants
 Plugin URI: https://github.com/Cro22
 Description: Activar este plugin impide que los aplicantes puedan solicitar puestos de trabajo sin completar la sección de disCapacidades.
-Version: 1.0.1
+Version: 1.0.2
 Author: Jesus
 Author URI: https://github.com/Cro22
 Text Domain: incluyeme-applicants
@@ -14,6 +14,7 @@ License: A "Slug" license name e.g. GPL2
 require 'plugin-update-checker/plugin-update-checker.php';
 require 'include/verifyApplicants.php';
 require 'include/activeIncluyemeApplicants.php';
+require_once plugin_dir_path(__FILE__) . 'include/menu/incluyeme_applicants_admin_menu.php';
 
 defined( 'ABSPATH' ) or exit;
 add_action( 'admin_init', 'incluyemeApplicants_requirements' );
@@ -39,7 +40,7 @@ function incluyemeApplicants_requirements() {
 }
 
 function incluyemeApplicants_loaderCheck() {
-	$version = '1.0.0';
+	$version = '1.0.2';
 	$check   = strcmp( get_option( 'incluyemeApplicantsVersion' ), $version );
 	if ( $check === 0 ) {
 		$template = plugin_dir_path( __FILE__ ) . '/include/templates/job-board/single.php';
