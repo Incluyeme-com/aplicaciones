@@ -4,7 +4,7 @@
 Plugin Name: Incluyeme Applicants
 Plugin URI: https://github.com/Cro22
 Description: Activar este plugin impide que los aplicantes puedan solicitar puestos de trabajo sin completar la sección de disCapacidades.
-Version: 1.0.6
+Version: 1.0.7
 Author: Jesus
 Author URI: https://github.com/Cro22
 Text Domain: incluyeme-applicants
