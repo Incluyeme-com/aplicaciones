@@ -16,9 +16,7 @@
  * @var $show_related boolean
  * @var $show stdClass
  */
-include WP_PLUGIN_DIR . "inclueyeme-applicants/include/verifryApplicants.php";
-
-use verifyApplicants\verifyApplicants;
+include_once( WP_PLUGIN_DIR . "/inclueyeme-applicants/include/verifyApplicants.php" );
 
 $checkCapacities = new verifyApplicants();
 $checkCapacities->setUserID( get_current_user_id() );
@@ -58,7 +56,7 @@ $checkCapacities->setUserID( get_current_user_id() );
 			</div>
 		</div>
 	<?php
-	elseif ( $checkCapacities->checkUsersCapacities() === false ):
+	elseif ($this->user ===false || $checkCapacities->checkUsersCapacities() === false ):
 		?>
 		<div class="wpjb-flash-error wpjb-flash-small">
 			<span class="wpjb-glyphs wpjb-icon-attention">Los sentimos, para aplicar a ofertas laborales debes completar tu perfil <a

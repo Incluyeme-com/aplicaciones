@@ -1,11 +1,6 @@
 <?php
 
-
-namespace verifyApplicants;
-
-
-use wpdb;
-
+require_once $_SERVER["DOCUMENT_ROOT"] . '/wp-load.php';
 class verifyApplicants {
 	
 	/**
@@ -34,11 +29,11 @@ class verifyApplicants {
 	private function getResumeId() {
 		$this->resume = self::$query->get_results( "SELECT * from {$this->prefix}wpjb_resume where user_id = {$this->user}" );
 		if ( count( $this->resume ) <= 0 ) {
-			wp_redirect( home_url(), 301 );
-			exit;
-		} else {
+			$this->user = false;
 			$this->resume = $this->resume[0]->id;
 		}
+			$this->resume = $this->resume[0]->id;
+		
 	}
 	
 	private function checkMetaId() {
