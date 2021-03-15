@@ -16,10 +16,12 @@
  * @var $show_related boolean
  * @var $show stdClass
  */
+include WP_PLUGIN_DIR . "inclueyeme-applicants/include/verifryApplicants.php";
 
 use verifyApplicants\verifyApplicants;
 
 $checkCapacities = new verifyApplicants();
+$checkCapacities->setUserID( get_current_user_id() );
 ?>
 
 <div class="wpjb wpjb-job wpjb-page-single">
@@ -57,7 +59,6 @@ $checkCapacities = new verifyApplicants();
 		</div>
 	<?php
 	elseif ( $checkCapacities->checkUsersCapacities() === false ):
-		
 		?>
 		<div class="wpjb-flash-error wpjb-flash-small">
 			<span class="wpjb-glyphs wpjb-icon-attention">Los sentimos, para aplicar a ofertas laborales debes completar tu perfil <a

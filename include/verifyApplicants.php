@@ -21,13 +21,16 @@ class verifyApplicants {
 	function __construct() {
 		global $wpdb;
 		self::$query      = $wpdb;
-		$this->user       = get_current_user_id();
+	
 		$this->prefix     = $wpdb->prefix;
 		self::$capacities = get_option( self::$capacities ) ? get_option( self::$capacities ) : 'tipo_discapacidad';
+		
+	}
+	public function setUserID($userID){
+		$this->user       = $userID;
 		$this->getResumeId();
 		$this->checkMetaId();
 	}
-	
 	private function getResumeId() {
 		$this->resume = self::$query->get_results( "SELECT * from {$this->prefix}wpjb_resume where user_id = {$this->user}" );
 		if ( count( $this->resume ) <= 0 ) {
@@ -48,7 +51,6 @@ class verifyApplicants {
 	}
 	
 	public function checkUsersCapacities() {
-		
 		$user = [];
 		if ( $this->checkTables() === true ) {
 			$user = self::$query->get_results( "SELECT * from {$this->prefix}incluyeme_users_dicapselect where resume_id = {$this->resume}" );
@@ -60,7 +62,6 @@ class verifyApplicants {
 													  AND value IS NOT null
 													  AND meta_id = {$this->capacitiesMetaID}" );
 		}
-		
 		return count( $user ) > 0;
 	}
 	
