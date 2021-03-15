@@ -1,6 +1,7 @@
 <?php
 
 require_once $_SERVER["DOCUMENT_ROOT"] . '/wp-load.php';
+
 class verifyApplicants {
 	
 	/**
@@ -15,24 +16,26 @@ class verifyApplicants {
 	
 	function __construct() {
 		global $wpdb;
-		self::$query      = $wpdb;
-	
+		self::$query = $wpdb;
+		
 		$this->prefix     = $wpdb->prefix;
 		self::$capacities = get_option( self::$capacities ) ? get_option( self::$capacities ) : 'tipo_discapacidad';
 		
 	}
-	public function setUserID($userID){
-		$this->user       = $userID;
+	
+	public function setUserID( $userID ) {
+		$this->user = $userID;
 		$this->getResumeId();
 		$this->checkMetaId();
 	}
+	
 	private function getResumeId() {
 		$this->resume = self::$query->get_results( "SELECT * from {$this->prefix}wpjb_resume where user_id = {$this->user}" );
 		if ( count( $this->resume ) <= 0 ) {
-			$this->user = false;
+			$this->user   = false;
 			$this->resume = $this->resume[0]->id;
 		}
-			$this->resume = $this->resume[0]->id;
+		$this->resume = $this->resume[0]->id;
 		
 	}
 	
@@ -43,6 +46,12 @@ class verifyApplicants {
 		} else {
 			$this->capacitiesMetaID = "capacitiesMetaID";
 		}
+	}
+	
+	public function getApplication( $application ) {
+		$this->resume = self::$query->get_results( "SELECT * from {$this->prefix}wpjb_application where user_id = {$this->user} AND 	job_id = {$application}" );
+		
+		return count( $this->resume ) <= 0;
 	}
 	
 	public function checkUsersCapacities() {
@@ -57,12 +66,12 @@ class verifyApplicants {
 													  AND value IS NOT null
 													  AND meta_id = {$this->capacitiesMetaID}" );
 		}
+		
 		return count( $user ) > 0;
 	}
 	
 	private function checkTables() {
 		$row = self::$query->get_results( "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{$this->prefix}incluyeme_users_dicapselect' AND column_name = 'resume_id'" );
-		
 		if ( empty( $row ) ) {
 			return false;
 		}
