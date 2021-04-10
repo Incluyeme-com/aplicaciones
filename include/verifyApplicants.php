@@ -49,9 +49,8 @@ class verifyApplicants {
 	}
 	
 	public function getApplication( $application ) {
-		$this->resume = self::$query->get_results( "SELECT * from {$this->prefix}wpjb_application where user_id = {$this->user} AND 	job_id = {$application}" );
-		
-		return count( $this->resume ) <= 0;
+		$application = self::$query->get_results( "SELECT * from {$this->prefix}wpjb_application where user_id = {$this->user} AND 	job_id = {$application}" );
+		return count( $application ) <= 0;
 	}
 	
 	public function checkUsersCapacities() {
@@ -66,7 +65,6 @@ class verifyApplicants {
 													  AND value IS NOT null
 													  AND meta_id = {$this->capacitiesMetaID}" );
 		}
-		
 		return count( $user ) > 0;
 	}
 	

@@ -62,7 +62,7 @@ $checkCapacities->setUserID( get_current_user_id() );
 						href="<?php echo wpjr_link_to( "myresume" ); ?>">aquí</a</span>
 		</div>
 	<?php
-	elseif ( $this->user !== false || $checkCapacities->getApplication($job->getId()) === false ):  ?>
+	elseif ($checkCapacities->getApplication($job->getId()) === false ):  ?>
 		<div class="wpjb-flash-error wpjb-flash-small">
 			<span class="wpjb-glyphs wpjb-icon-attention">Ya ha aplicado a esta oferta laboral</span>
 		</div>

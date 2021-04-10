@@ -5,17 +5,22 @@
  */
 
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-	die;
+    die;
 }
 
 global $wpdb;
 $route = get_template_directory();
 $route = $route . '/wpjobboard/job-board/single.php';
 deleteDirectory( $route );
+
 function deleteDirectory( $dir ) {
-	if ( ! file_exists( $dir ) ) {
-		if ( ! is_dir( $dir ) ) {
-			unlink( $dir );
-		}
-	}
+    if ( ! file_exists( $dir ) ) {
+        return true;
+    }
+    
+    if ( ! is_dir( $dir ) ) {
+        return unlink( $dir );
+    }
+    
+    return true;
 }
